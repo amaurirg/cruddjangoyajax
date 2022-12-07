@@ -52,8 +52,9 @@
 
                         <td align="center">
                             <button class="btn btn-success form-control" onClick="editUser({{ categoria.id }})"
-                                    data-toggle="modal" data-target="#myModal" )
-                            ">Editar</button>
+                                    data-toggle="modal" data-target="#myModal" )>
+                                Editar
+                            </button>
                         </td>
                         <td align="center">
                             <button class="btn btn-danger form-control" onClick="deleteUser({{ categoria.id }})">
@@ -66,7 +67,7 @@
         </div>
     </div>
 </div>
-</div>
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -92,12 +93,48 @@
     </div>
 </div>
 
+<button type="button" class="btn btn-success btn-lg">GET</button>
+<ul id="categorias">
+    {% comment %}{% for item in produtos %}
+    <li>{{ item }}</li>
+    {% endfor %}{% endcomment %}
+</ul>
+
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
 
 
 <script>
+    $(document).ready(function () {
+        $(".btn").click(function () {
+            $.ajax({
+                url: '{% url "produtos" %}',
+                type: 'get',
+                {% comment %}data: {
+                    button_text: $(this).text()
+                },{% endcomment %}
+                success: function (response) {
+                    {% comment %}$(".btn").text(response.seconds);
+                    $('#seconds').append(`<li>${response.seconds}</li>`){% endcomment %}
+
+                    console.log(response.produtos)
+                    console.log("SUCCESS")
+                    const produtos = response.produtos;
+                    $("#categorias").empty()
+                    produtos.forEach(produto => {
+                        $("#categorias").append(`<li>${produto.nome}</li>`)
+                    })
+                    {% comment %}$('#categoria').append(response.produtos){% endcomment %}
+                },
+                error: function (){
+                    console.log("ERROR")
+                }
+            });
+        });
+    });
+
+
     // Create Django Ajax Call
     $("form#addCategoria").submit(function () {
         var nameInput = $('input[name="nombre"]').val().trim();

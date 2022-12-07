@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from ajax.views import (
     CrudView, CreateCrudCategoria, DeleteCrudCategoria,
-    UpdateCrudCategoria,
+    UpdateCrudCategoria, ListCategories, cria_produto, Cria_Categoria, produtos,
 )
 
 
@@ -29,5 +29,8 @@ urlpatterns = [
     path('ajax/crud/create/', CreateCrudCategoria.as_view(), name='crud_ajax_create'),
     path('ajax/crud/delete/', DeleteCrudCategoria.as_view(), name='crud_ajax_delete'),
     path('ajax/crud/update/', UpdateCrudCategoria.as_view(), name='crud_ajax_update'),
-
+    path('ajax/crud/categorias/', ListCategories.as_view(), name='crud_ajax_list'),
+    path('cria_produto/', cria_produto, name='crud_ajax_list'),
+    # path('cria_produto/', Cria_Categoria.as_view(), name='cria_categoria'),
+    path('produtos/', produtos, name='produtos'),
 ]

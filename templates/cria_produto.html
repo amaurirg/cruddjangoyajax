@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<label for="nova_categoria">Nova categoria</label>
+<input type="text" id="nova_categoria" name="nova_categoria">
+<button type="button" id="botao">Incluir</button>
+<form id="add_categoria" action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    {% comment %}{% for field in form %}
+        {{ field }}
+    {% endfor %}{% endcomment %}
+    <button type="submit">Salvar</button>
+</form>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+<script>
+    $(document).ready(function () {
+        $("#botao").click(function () {
+            $.ajax({
+                url: '',
+                type: 'get',
+                data: {
+                    nome: $('input[name=nova_categoria]').val()
+                },
+                success: function (response) {
+                    $("#id_categoria").append($("<option></option>").attr("value", response.id).text(response.nova_categoria));
+                }
+            });
+            {% comment %}$('form#add_categoria').trigger("reset");
+            return false;{% endcomment %}
+        });
+    });
+
+</script>
+</body>
+
+</html>
